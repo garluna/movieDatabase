@@ -27,7 +27,7 @@
 
 			<div class="col-md-8">
 				<form action="add_actorDirector.php" method="GET">
-					TACO: 	<input type="radio" name="whois" value="Actor"> Actor
+					Role: 	<input type="radio" name="whois" value="Actor"> Actor
 							<input type="radio" name="whois" value="Director"> Director <br>
 					First Name: <input type="text" name="first_name"><br>
 					Last Name: 	<input type="text" name="last_name"><br>
@@ -69,11 +69,13 @@
 			$id_rs = mysql_query($id_query, $db_connection);
 			$row = mysql_fetch_row($id_rs);
 			$id = current($row) + 1;
+			echo $id;
 			mysql_free_result($id_rs);
 
-			$query = 'INSERT INTO
-						$whois
-						VALUES ($id,"$last_name", "$first_name", "$gender", $dob, $dod);';
+			$query = "INSERT INTO " . $whois . " VALUES (69001, \"Luna\", \"Gari\", \"Female\", 20001231, 20981231);";
+						// $whois
+						// # VALUES ($id,"$last_name", "$first_name", "$gender", $dob, $dod);
+						// VALUES (69001, "Luna", "Gari", "Female", 20001231, 20981231)';
 
 			mysql_query($query, $db_connection);
 
