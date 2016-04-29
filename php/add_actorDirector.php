@@ -79,8 +79,8 @@
 
 			mysql_query($query, $db_connection);
 
-			$increment_query = ''; // TACO write a query to increment max ID
-		
+			$increment_query = "UPDATE MaxPersonID SET id=$id;"; // TACO write a query to increment max ID
+			mysql_query($increment_query, $db_connection);
 			
 			mysql_close($db_connection);
         }
