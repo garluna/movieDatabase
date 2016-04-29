@@ -26,35 +26,37 @@
 			</div> 
 
 			<div class="col-md-8">
-				Title: <input type="text" name="title"><br>
-				Company: <input type="text" name="company"><br>
-				Year: <input type="text" name="year"><br>
-				MPAA Rating:	<input type="radio" name="rating" value="G"> G
-								<input type="radio" name="rating" value="PG"> PG 
-								<input type="radio" name="rating" value="PG-13"> PG-13 
-								<input type="radio" name="rating" value="R"> R
-								<input type="radio" name="rating" value="NC-17"> NC-17
-								<input type="radio" name="rating" value="surrendere"> Surrendered<br>
-				Genre : <input type="radio" name="genre" value="Action"> Action 
-						<input type="radio" name="genre" value="Adult"> Adult 
-						<input type="radio" name="genre" value="Adventure"> Adventure 
-						<input type="radio" name="genre" value="Animation"> Animation 
-						<input type="radio" name="genre" value="Comedy"> Comedy 
-						<input type="radio" name="genre" value="Crime"> Crime 
-						<input type="radio" name="genre" value="Documentary"> Documentary 
-						<input type="radio" name="genre" value="Drama"> Drama 
-						<input type="radio" name="genre" value="Family"> Family 
-						<input type="radio" name="genre" value="Fantasy"> Fantasy 
-						<input type="radio" name="genre" value="Horror"> Horror 
-						<input type="radio" name="genre" value="Musical"> Musical 
-						<input type="radio" name="genre" value="Mystery"> Mystery 
-						<input type="radio" name="genre" value="Romance"> Romance 
-						<input type="radio" name="genre" value="Sci-Fi"> Sci-Fi 
-						<input type="radio" name="genre" value="Short"> Short 
-						<input type="radio" name="genre" value="Thriller"> Thriller 
-						<input type="radio" name="genre" value="War"> War 
-						<input type="radio" name="genre" value="Western"> Western<br>
-				<input type="submit" value="Submit" />
+				<form action="add_movie.php" method="GET">
+					Title: <input type="text" name="title"><br>
+					Company: <input type="text" name="company"><br>
+					Year: <input type="text" name="year"><br>
+					MPAA Rating:	<input type="radio" name="rating" value="G"> G
+									<input type="radio" name="rating" value="PG"> PG 
+									<input type="radio" name="rating" value="PG-13"> PG-13 
+									<input type="radio" name="rating" value="R"> R
+									<input type="radio" name="rating" value="NC-17"> NC-17
+									<input type="radio" name="rating" value="surrendere"> Surrendered<br>
+					Genre : <input type="radio" name="genre" value="Action"> Action 
+							<input type="radio" name="genre" value="Adult"> Adult 
+							<input type="radio" name="genre" value="Adventure"> Adventure 
+							<input type="radio" name="genre" value="Animation"> Animation 
+							<input type="radio" name="genre" value="Comedy"> Comedy 
+							<input type="radio" name="genre" value="Crime"> Crime 
+							<input type="radio" name="genre" value="Documentary"> Documentary 
+							<input type="radio" name="genre" value="Drama"> Drama 
+							<input type="radio" name="genre" value="Family"> Family 
+							<input type="radio" name="genre" value="Fantasy"> Fantasy 
+							<input type="radio" name="genre" value="Horror"> Horror 
+							<input type="radio" name="genre" value="Musical"> Musical 
+							<input type="radio" name="genre" value="Mystery"> Mystery 
+							<input type="radio" name="genre" value="Romance"> Romance 
+							<input type="radio" name="genre" value="Sci-Fi"> Sci-Fi 
+							<input type="radio" name="genre" value="Short"> Short 
+							<input type="radio" name="genre" value="Thriller"> Thriller 
+							<input type="radio" name="genre" value="War"> War 
+							<input type="radio" name="genre" value="Western"> Western<br>
+					<input type="submit" value="Submit" />
+				</form>
 			</div>
 		</div>
 
@@ -81,7 +83,6 @@
 			$id_rs = mysql_query($id_query, $db_connection);
 			$row = mysql_fetch_row($id_rs);
 			$id = current($row) + 1;
-			echo $id;
 			mysql_free_result($id_rs);
 
 			$query = "INSERT INTO Movie VALUES ($id, \"$title\", \"$year\", \"$rating\", \"$company\");";

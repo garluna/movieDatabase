@@ -69,7 +69,6 @@
 			$id_rs = mysql_query($id_query, $db_connection);
 			$row = mysql_fetch_row($id_rs);
 			$id = current($row) + 1;
-			echo $id;
 			mysql_free_result($id_rs);
 
 			$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, $dod);";
