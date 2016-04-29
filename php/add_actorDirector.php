@@ -50,7 +50,7 @@
 		{
 			$whois = $_GET['whois'];
 			$first_name = $_GET['first_name'];
-			$last_name = $_GET['first_name'];
+			$last_name = $_GET['last_name'];
 			$gender = $_GET['gender'];
 			$dob = $_GET['doby'] . $_GET['dobm'] . $_GET['dobd'];
 			$dod = $_GET['dody'] . $_GET['dodm'] . $_GET['dodd'];
@@ -72,7 +72,7 @@
 			echo $id;
 			mysql_free_result($id_rs);
 
-			$query = "INSERT INTO " . $whois . " VALUES (69001, \"Luna\", \"Gari\", \"Female\", 20001231, 20981231);";
+			$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, $dod);";
 						// $whois
 						// # VALUES ($id,"$last_name", "$first_name", "$gender", $dob, $dod);
 						// VALUES (69001, "Luna", "Gari", "Female", 20001231, 20981231)';
