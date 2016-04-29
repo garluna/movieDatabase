@@ -26,20 +26,22 @@
 			</div> 
 
 			<div class="col-md-8">
-				TACO: 	<input type="radio" name="whois" value="Actor"> Actor
-						<input type="radio" name="whois" value="Director"> Director <br>
-				First Name: <input type="text" name="first_name"><br>
-				Last Name: 	<input type="text" name="last_name"><br>
-				Gender: <input type="radio" name="gender" value="Female"> Female
-						<input type="radio" name="gender" value="Male"> Male <br>
-				Date of Birth (YYYY/MM/DD): <input type="text" cols="4" name="doby"> /
-											<input type="text" cols="2" name="dobm"> /
-											<input type="text" cols="2" name="dobd"><br>
-				Date of Death (YYYY/MM/DD): <input type="text" cols="4" name="dody"> /
-											<input type="text" cols="2" name="dodm"> /
-											<input type="text" cols="2" name="dodd"><br>
-											(Leave blank if still alive)<br>
-				<input type="submit" value="Submit" />
+				<form action="add_actorDirector.php" method="GET">
+					TACO: 	<input type="radio" name="whois" value="Actor"> Actor
+							<input type="radio" name="whois" value="Director"> Director <br>
+					First Name: <input type="text" name="first_name"><br>
+					Last Name: 	<input type="text" name="last_name"><br>
+					Gender: <input type="radio" name="gender" value="Female"> Female
+							<input type="radio" name="gender" value="Male"> Male <br>
+					Date of Birth (YYYY/MM/DD): <input type="text" cols="4" name="doby"> /
+												<input type="text" cols="2" name="dobm"> /
+												<input type="text" cols="2" name="dobd"><br>
+					Date of Death (YYYY/MM/DD): <input type="text" cols="4" name="dody"> /
+												<input type="text" cols="2" name="dodm"> /
+												<input type="text" cols="2" name="dodd"><br>
+												(Leave blank if still alive)<br>
+					<input type="submit" value="Submit" />
+				</form>
 			</div>
 		</div>
 		
