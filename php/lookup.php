@@ -94,6 +94,25 @@
 		}
 
 		mysql_free_result($ainfo_rs);
+
+		print '<h3>Reviews</h3>';
+		$avg_rating_q = "SELECT AVG(rating) FROM Review WHERE mid=$mid;";
+		$review_q = "SELECT name, time, comment, rating FROM Review WHERE mid=$mid;";
+
+		$rating_rs = mysql_query($avg_rating_q, $db_connection);
+		$review_rs = mysql_query($review_q, $db_connection);
+
+		$row4 = mysql_fetch_assoc($rating_rs);
+		// print_r($row4);
+		print "Average User Rating: " . $row4['AVG(rating)'] . "<br>";
+
+		while ($row5 = mysql_fetch_array($review_rs))
+		{
+			// print_r($row5);
+			print "<h4>\"" . $row5['comment'] . "\"</h4>";
+			print "- " . $row5['name'] . ", " . $row5['time'] . ", Rating: " . $row5['rating'] . "<br>"; 
+		}
+
 		mysql_close($db_connection);
 	}	
 ?>
