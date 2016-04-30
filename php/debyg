@@ -26,32 +26,7 @@
 			</div> 
 
 			<div class="col-md-8">
-					<?php
-						include 'lookup.php';
-
-						$db_connection = mysql_connect("localhost", "cs143", "");
-
-					    if(!$db_connection) {
-					    	echo "Hi";
-			                $errmsg = mysql_error($db_connection);
-			                print "Connection failed: $errmsg <br />";
-			                exit(1);
-			            }
-
-			            mysql_select_db("CS143", $db_connection);
-
-			            $id_query = "SELECT MIN(id) FROM Actor;";
-						$id_rs = mysql_query($id_query, $db_connection);
-						$row = mysql_fetch_assoc($id_rs);
-						$minID = current($row);
-						// print_r($row);
-						
-			            // actorLookup($minID);
-			            actorLookup(367);
-			            mysql_free_result($id_rs);
-			            mysql_close($db_connection);
-					?>
-			</div>
+					ROW ID: Printing information for actor <h3>Show Actor Info</h3>failureName:  <br>Gender: <br>Date of Birth: <br>Date of Death: <h3>Filmography</h3>			</div>
 		</div>
 	</body>
 </html>
