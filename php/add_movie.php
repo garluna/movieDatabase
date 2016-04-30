@@ -36,67 +36,73 @@
 									<input type="radio" name="rating" value="R"> R
 									<input type="radio" name="rating" value="NC-17"> NC-17
 									<input type="radio" name="rating" value="surrendere"> Surrendered<br>
-					Genre : <input type="radio" name="genre" value="Action"> Action 
-							<input type="radio" name="genre" value="Adult"> Adult 
-							<input type="radio" name="genre" value="Adventure"> Adventure 
-							<input type="radio" name="genre" value="Animation"> Animation 
-							<input type="radio" name="genre" value="Comedy"> Comedy 
-							<input type="radio" name="genre" value="Crime"> Crime 
-							<input type="radio" name="genre" value="Documentary"> Documentary 
-							<input type="radio" name="genre" value="Drama"> Drama 
-							<input type="radio" name="genre" value="Family"> Family 
-							<input type="radio" name="genre" value="Fantasy"> Fantasy 
-							<input type="radio" name="genre" value="Horror"> Horror 
-							<input type="radio" name="genre" value="Musical"> Musical 
-							<input type="radio" name="genre" value="Mystery"> Mystery 
-							<input type="radio" name="genre" value="Romance"> Romance 
-							<input type="radio" name="genre" value="Sci-Fi"> Sci-Fi 
-							<input type="radio" name="genre" value="Short"> Short 
-							<input type="radio" name="genre" value="Thriller"> Thriller 
-							<input type="radio" name="genre" value="War"> War 
-							<input type="radio" name="genre" value="Western"> Western<br>
+					Genre : <input type="checkbox" name="genre[]" value="Action"> Action 
+							<input type="checkbox" name="genre[]" value="Adult"> Adult 
+							<input type="checkbox" name="genre[]" value="Adventure"> Adventure 
+							<input type="checkbox" name="genre[]" value="Animation"> Animation 
+							<input type="checkbox" name="genre[]" value="Comedy"> Comedy 
+							<input type="checkbox" name="genre[]" value="Crime"> Crime 
+							<input type="checkbox" name="genre[]" value="Documentary"> Documentary 
+							<input type="checkbox" name="genre[]" value="Drama"> Drama 
+							<input type="checkbox" name="genre[]" value="Family"> Family 
+							<input type="checkbox" name="genre[]" value="Fantasy"> Fantasy 
+							<input type="checkbox" name="genre[]" value="Horror"> Horror 
+							<input type="checkbox" name="genre[]" value="Musical"> Musical 
+							<input type="checkbox" name="genre[]" value="Mystery"> Mystery 
+							<input type="checkbox" name="genre[]" value="Romance"> Romance 
+							<input type="checkbox" name="genre[]" value="Sci-Fi"> Sci-Fi 
+							<input type="checkbox" name="genre[]" value="Short"> Short 
+							<input type="checkbox" name="genre[]" value="Thriller"> Thriller 
+							<input type="checkbox" name="genre[]" value="War"> War 
+							<input type="checkbox" name="genre[]" value="Western"> Western<br>
 					<input type="submit" value="Submit" />
 				</form>
 			</div>
 		</div>
 
 		<?php
-		if ( !empty( $_GET['title'])) 
-		{
-			$title = $_GET['title'];
-			$year = $_GET['year'];
-			$company = $_GET['company'];
-			$rating = $_GET['rating'];
-			$genre = $_GET['genre'];
+			if (!empty( $_GET['title'])) 
+			{
+				$title = $_GET['title'];
+				$year = $_GET['year'];
+				$company = $_GET['company'];
+				$rating = $_GET['rating'];
 
-		    $db_connection = mysql_connect("localhost", "cs143", "");
+			    $db_connection = mysql_connect("localhost", "cs143", "");
 
-		    if(!$db_connection) {
-                $errmsg = mysql_error($db_connection);
-                print "Connection failed: $errmsg <br />";
-                exit(1);
-            }
+			    if(!$db_connection) {
+	                $errmsg = mysql_error($db_connection);
+	                print "Connection failed: $errmsg <br />";
+	                exit(1);
+	            }
 
-            mysql_select_db("CS143", $db_connection);
+	            mysql_select_db("CS143", $db_connection);
 
-		    $id_query = 'SELECT id FROM MaxMovieID';
-			$id_rs = mysql_query($id_query, $db_connection);
-			$row = mysql_fetch_row($id_rs);
-			$id = current($row) + 1;
-			mysql_free_result($id_rs);
+			    $id_query = 'SELECT id FROM MaxMovieID';
+				$id_rs = mysql_query($id_query, $db_connection);
+				$row = mysql_fetch_row($id_rs);
+				$id = current($row) + 1;
+				mysql_free_result($id_rs);
 
-			$query = "INSERT INTO Movie VALUES ($id, \"$title\", \"$year\", \"$rating\", \"$company\");";
-			mysql_query($query, $db_connection);
+				$query = "INSERT INTO Movie VALUES ($id, \"$title\", \"$year\", \"$rating\", \"$company\");";
+				mysql_query($query, $db_connection);
 
-			$query2 = "INSERT INTO MovieGenre VALUES ($id, \"$genre\");";
-			mysql_query($query2, $db_connection);
+				// Insert genre(s) into MovieGenre table
+				if(is_array($_GET['genre'])) {
+				    foreach($_GET['genre'] as $genre) {
+				        $add_genre_q = "INSERT INTO MovieGenre VALUES ($id, \"$genre\");";
+				        mysql_query($add_genre_q, $db_connection);
+				    }
+				}
 
-			$increment_query = "UPDATE MaxMovieID SET id=$id;"; // TACO write a query to increment max ID
-			mysql_query($increment_query, $db_connection);
-			
-			mysql_close($db_connection);
-        }
-        	
+				// $query2 = "INSERT INTO MovieGenre VALUES ($id, \"$genre\");";
+				// mysql_query($query2, $db_connection);
+
+				$increment_query = "UPDATE MaxMovieID SET id=$id;";
+				mysql_query($increment_query, $db_connection);
+				
+				mysql_close($db_connection);
+	        }
 		?>
 	</body>
 </html>
