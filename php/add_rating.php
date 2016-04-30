@@ -26,7 +26,7 @@
 			</div> 
 
 			<div class="col-md-8">
-				<form action="add_movieActor.php" method="GET">
+				<form action="add_rating.php" method="GET">
 					<?php
 						print "Movie: 	<select name=\"mid\">";
 						$db_connection = mysql_connect("localhost", "cs143", "");
@@ -86,11 +86,9 @@
 
 		            mysql_select_db("CS143", $db_connection);
 
-					$query = "INSERT INTO Review VALUES (\"$name\", CURRENT_TIMESTAMP(), $mid, $rating, \"$comment\");";
+					$query = "INSERT INTO Review VALUES (\"$name\", CURRENT_TIMESTAMP(), $mid, $rating, \"$comments\");";
 
 					$rs = mysql_query($query, $db_connection);
-					if($rs)
-						print "Success!";
 					mysql_close($db_connection);
 		        }
 	        	
