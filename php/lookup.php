@@ -54,32 +54,36 @@
 
 		// Print information about the actor/actress
 		print '<h3>Movie Info</h3>';
-		$movie_info_q = "SELECT title, year, rating, company FROM Actor WHERE id=$mid;";
-		$move_genre_q = "SELECT genre FROM MovieGenre WHERE mid=$mid;";
+		$movie_info_q = "SELECT title, year, rating, company FROM Movie WHERE id=$mid;";
+		$movie_genre_q = "SELECT genre FROM MovieGenre WHERE mid=$mid;";
 
 		$minfo_rs = mysql_query($movie_info_q, $db_connection);
 		$mgenre_rs = mysql_query($movie_genre_q, $db_connection);
-
+	
 		$row = mysql_fetch_assoc($minfo_rs);
 		// print_r($row);
 		print "Title: "		. $row['title'] . " (" . $row['year'] . ")<br>";
 		print "Producer: " 	. $row['company'] . "<br>";
 		print "Rating: " 	. $row['rating'] . "<br>";
 		print "Genre: ";
+
+		// $row2 = mysql_fetch_array($mgenre_rs);
+		// print_r($row2);
+
 		if ($row2 = mysql_fetch_array($mgenre_rs))
 		{
-			print $row2['genre']
+			print $row2['genre'];
 		}
 		while ($row2 = mysql_fetch_array($mgenre_rs))
 		{
-			print " ," . $row2['genre'];
+			print ", " . $row2['genre'];
 		}
 		print "<br>";
 		mysql_free_result($minfo_rs);
 		mysql_free_result($mgenre_rs);
 
 		// Print films they've played a role in
-		print '<h3>Actors in thie Movie</h3>';
+		print '<h3>Actors in the Movie</h3>';
 		$actor_info_q = "SELECT first, last, role FROM MovieActor, Actor WHERE MovieActor.mid = $mid AND MovieActor.aid = Actor.id";
 
 		$ainfo_rs = mysql_query($actor_info_q, $db_connection);
