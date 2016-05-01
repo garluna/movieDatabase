@@ -26,7 +26,7 @@
 			</div> 
 
 			<div class="col-md-8">
-				<form action="add_rating.php" method="GET">
+				<form action="add_movieActor.php" method="GET">
 					<?php
 						print "Movie: 	<select name=\"mid\">";
 						$db_connection = mysql_connect("localhost", "cs143", "");
@@ -51,30 +51,45 @@
 			            mysql_close($db_connection);
 
 			            print "</select><br>";
+
+			            //Select Actors
+			            print "Actor: 	<select name=\"aid\">";
+						$db_connection = mysql_connect("localhost", "cs143", "");
+
+					    if(!$db_connection) {
+			                $errmsg = mysql_error($db_connection);
+			                print "Connection failed: $errmsg <br />";
+			                exit(1);
+			            }
+
+			            mysql_select_db("CS143", $db_connection);
+
+			            $getMovies = "SELECT first, last, id FROM Actor ORDER BY first ASC;";
+			            $rs = mysql_query($getMovies, $db_connection);
+
+			            while($row = mysql_fetch_array($rs))
+			            {
+			            	print "<option value='" . $row['id'] . "'>" . $row['first'] . " " . $row['last'] . " </option>";
+			            }
+
+			            mysql_free_result($rs);
+			            mysql_close($db_connection);
+
+			            print "</select><br>";
 					?>
 					
-					Your Name: <input type="text" name="name"><br>
-					Rating: <select name="rating">
-						<option value='5'>5 - Excellent</option>
-						<option value='4'>4 - Good</option>
-						<option value='3'>3 - OK</option>
-						<option value='2'>2 - Not worth it</option>
-						<option value='1'>1 - Hate it</option>
-					</select><br>
-					Comments:<br>
-					<textarea rows="4" cols="50" name="comments"></textarea><br><br>
+					Role: <input type="text" name="role"><br>
 					<input type="submit" value="Submit" />
 				</form>
 			</div>
 		</div>
 			<?php
 
-				if ( !empty( $_GET['name'])) 
+				if ( !empty( $_GET['role'])) 
 				{
+					$role = $_GET['role'];
 					$mid = $_GET['mid'];
-					$name = $_GET['name'];
-					$rating = $_GET['rating']; // get integer value of rating
-					$comments = $_GET['comments'];
+					$aid = $_GET['aid'];
 
 				    $db_connection = mysql_connect("localhost", "cs143", "");
 
@@ -86,12 +101,13 @@
 
 		            mysql_select_db("CS143", $db_connection);
 
-					$query = "INSERT INTO Review VALUES (\"$name\", CURRENT_TIMESTAMP(), $mid, $rating, \"$comments\");";
+					$query = "INSERT INTO MovieActor VALUES ($mid, $aid, \"$role\");";
 
 					if (!mysql_query($query, $db_connection))
 					{
-						print "Invalid SQL query: Cannot add Review <br />";
+						print "Invalid SQL query: Cannot add information into MovieActor";
 					}
+
 					mysql_close($db_connection);
 		        }
 	        	

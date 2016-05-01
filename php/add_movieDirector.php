@@ -98,7 +98,10 @@
 
 				$query = "INSERT INTO MovieDirector VALUES ($mid, $did);";
 
-				mysql_query($query, $db_connection);
+				if (!mysql_query($query, $db_connection))
+				{
+					print "Invalid SQL query: Cannot add information into MovieDirector";
+				}
 
 				mysql_close($db_connection);
 			?>
