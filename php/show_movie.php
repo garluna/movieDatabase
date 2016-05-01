@@ -40,13 +40,16 @@
 
 			            mysql_select_db("CS143", $db_connection);
 
-			            $id_query = "SELECT MIN(id) FROM Movie;";
-						$id_rs = mysql_query($id_query, $db_connection);
-						$row = mysql_fetch_assoc($id_rs);
-						$minID = current($row);
-						// print_r($row);
-						
-			            // actorLookup($minID);
+			            if (!empty($_GET['mid'])) // if mid passed by another page
+			            	$minID = $_GET['mid'];
+			            else // if no specified mid
+			            {
+			            	$id_query = "SELECT MIN(id) FROM Movie;";
+							$id_rs = mysql_query($id_query, $db_connection);
+							$row = mysql_fetch_assoc($id_rs);
+							$minID = current($row);
+			            }
+			            
 			            movieLookup($minID);
 			            mysql_free_result($id_rs);
 			            mysql_close($db_connection);

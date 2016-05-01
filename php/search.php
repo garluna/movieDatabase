@@ -76,7 +76,7 @@
 
 	            // print matching movies
 	            print "<h3>Matching Movies</h3><br>";
-	            $movie_q = "SELECT title from Movie ORDER BY title;";
+	            $movie_q = "SELECT title, id from Movie ORDER BY title;";
 	            $movie_rs = mysql_query($movie_q, $db_connection);
 
 	            while($row = mysql_fetch_array($movie_rs))
@@ -94,7 +94,8 @@
 
 	            	// print movie name if every user input word was found in the title
 	            	if($to_print)
-	            		print "Movie: " . $row['title'] . "<br>";
+	            		// print "Movie:" . $row['title'] . "<br>";
+	            		print "Movie:<a href='show_movie.php?mid=" . $row['id'] . "'>" . $row['title'] . "</a><br>";
 	            }
 
 				mysql_free_result($actor_rs);

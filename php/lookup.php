@@ -33,7 +33,8 @@
 
 		while($row2 = mysql_fetch_array($finfo_rs))
 		{
-			print "<b>Played role: </b>" . $row2['role'] . "<b> in: </b>" . $row2['title'] . "<br>"; 
+			// print "<b>Played role: </b>" . $row2['role'] . "<b> in: </b>" . $row2['title'] . "<br>"; 
+			print "<b>Played role: </b>" . $row2['role'] . "<b> in:</b> <a href='show_movie.php?mid=" . $row2['id'] . "'>" . $row2['title'] . "</a><br>";
 		}
 
 		mysql_free_result($finfo_rs);
@@ -61,14 +62,11 @@
 		$mgenre_rs = mysql_query($movie_genre_q, $db_connection);
 	
 		$row = mysql_fetch_assoc($minfo_rs);
-		// print_r($row);
+
 		print "Title: "		. $row['title'] . " (" . $row['year'] . ")<br>";
 		print "Producer: " 	. $row['company'] . "<br>";
 		print "Rating: " 	. $row['rating'] . "<br>";
 		print "Genre: ";
-
-		// $row2 = mysql_fetch_array($mgenre_rs);
-		// print_r($row2);
 
 		if ($row2 = mysql_fetch_array($mgenre_rs))
 		{
@@ -82,7 +80,7 @@
 		mysql_free_result($minfo_rs);
 		mysql_free_result($mgenre_rs);
 
-		// Print films they've played a role in
+		// Print actors that were in this movie
 		print '<h3>Actors in the Movie</h3>';
 		$actor_info_q = "SELECT first, last, role FROM MovieActor, Actor WHERE MovieActor.mid = $mid AND MovieActor.aid = Actor.id";
 
@@ -90,7 +88,8 @@
 
 		while($row3 = mysql_fetch_array($ainfo_rs))
 		{
-			print "<b>Actor: </b>" . $row3['first'] . " ". $row3['last'] . "<b> as </b>" . $row3['role'] . "<br>"; 
+			// print "<b>Actor: </b>" . $row3['first'] . " ". $row3['last'] . "<b> as </b>" . $row3['role'] . "<br>"; 
+			print "<b>Actor:</b> <a href='show_actor.php?aid=" . $row3['id'] . "'>" . $row3['first'] . " ". $row3['last'] . "</a><br>";
 		}
 
 		mysql_free_result($ainfo_rs);
