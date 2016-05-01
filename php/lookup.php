@@ -95,44 +95,56 @@
 				print ", " . $row2['genre'];
 			}
 			print "<br>";
-			mysql_free_result($minfo_rs);
-			mysql_free_result($mgenre_rs);
 
 			// Print actors that were in this movie
 			print '<h3>Actors in the Movie</h3>';
 			$actor_info_q = "SELECT first, last, role, id FROM MovieActor, Actor WHERE MovieActor.mid = $mid AND MovieActor.aid = Actor.id";
 
 			$ainfo_rs = mysql_query($actor_info_q, $db_connection);
-
-			while($row3 = mysql_fetch_array($ainfo_rs))
+			if (!is_resource($ainfo_rs))
 			{
-				// print "<b>Actor: </b>" . $row3['first'] . " ". $row3['last'] . "<b> as </b>" . $row3['role'] . "<br>"; 
-				print "<b>Actor:</b> <a href='show_actor.php?aid=" . $row3['id'] . "'>" . $row3['first'] . " ". $row3['last'] . "</a><br>"; 
+				print "Invalid SQL query: Cannot get Actor and Movie information";
 			}
-
-			mysql_free_result($ainfo_rs);
-
-			print '<h3>Reviews</h3>';
-			$avg_rating_q = "SELECT AVG(rating) FROM Review WHERE mid=$mid;";
-			$review_q = "SELECT name, time, comment, rating FROM Review WHERE mid=$mid;";
-
-			$rating_rs = mysql_query($avg_rating_q, $db_connection);
-			$review_rs = mysql_query($review_q, $db_connection);
-
-			$row4 = mysql_fetch_assoc($rating_rs);
-			// print_r($row4);
-			print "Average User Rating: " . $row4['AVG(rating)'] . "<br>";
-
-			while ($row5 = mysql_fetch_array($review_rs))
+			else
 			{
-				// print_r($row5);
-				print "<h4>\"" . $row5['comment'] . "\"</h4>";
-				print "- " . $row5['name'] . ", " . $row5['time'] . ", Rating: " . $row5['rating'] . "<br>"; 
+				while($row3 = mysql_fetch_array($ainfo_rs))
+				{
+					// print "<b>Actor: </b>" . $row3['first'] . " ". $row3['last'] . "<b> as </b>" . $row3['role'] . "<br>"; 
+					print "<b>Actor:</b> <a href='show_actor.php?aid=" . $row3['id'] . "'>" . $row3['first'] . " ". $row3['last'] . "</a><br>"; 
+				}
+
+				print '<h3>Reviews</h3>';
+				$avg_rating_q = "SELECT AVG(rating) FROM Review WHERE mid=$mid;";
+				$review_q = "SELECT name, time, comment, rating FROM Review WHERE mid=$mid;";
+
+				$rating_rs = mysql_query($avg_rating_q, $db_connection);
+				$review_rs = mysql_query($review_q, $db_connection);
+
+				if (!is_resource($rating_rs) || !is_resource($review_rs))
+				{
+					print "Invalid SQL query: Cannot get information from Review";
+				}
+				else
+				{
+					$row4 = mysql_fetch_assoc($rating_rs);
+					// print_r($row4);
+					print "Average User Rating: " . $row4['AVG(rating)'] . "<br>";
+
+					while ($row5 = mysql_fetch_array($review_rs))
+					{
+						// print_r($row5);
+						print "<h4>\"" . $row5['comment'] . "\"</h4>";
+						print "- " . $row5['name'] . ", " . $row5['time'] . ", Rating: " . $row5['rating'] . "<br>"; 
+					}
+				}
 			}
 		}
 
 		mysql_free_result($minfo_rs);
 		mysql_free_result($mgenre_rs);
+		mysql_free_result($ainfo_rs);
+		mysql_free_result($rating_rs);
+		mysql_free_result($review_rs);
 		mysql_close($db_connection);
 	}	
 ?>
