@@ -52,49 +52,63 @@
 			            print "<h3>Matching Actors</h3><br>";
 			            $actor_q = "SELECT first, last, id FROM Actor ORDER BY last;";
 			            $actor_rs = mysql_query($actor_q, $db_connection);
-			            
-			            while($row = mysql_fetch_array($actor_rs))
+
+			            if (!is_resource($actor_rs))
 			            {
-			            	$to_print = true;
-
-			            	foreach ($input_array as $word)
-			            	{
-			            		$fullname = " " . $row['first'] . " " . $row['last'];
-		            			if (strpos($fullname, $word) == false)
-		            			{
-		            				$to_print = false;
-		            				break;
-		            			}
-			            	}
-
-			            	// print actor name if every user input word was found in their name
-			            	if($to_print)
-			            		print "Actor:<a href='show_actor.php?aid=" . $row['id'] . "'>" . $fullname . "</a><br>";
+			            	print "Invalid SQL query: Cannot get information about Actor";
 			            }
+			            else
+			            {
+				            while($row = mysql_fetch_array($actor_rs))
+				            {
+				            	$to_print = true;
+
+				            	foreach ($input_array as $word)
+				            	{
+				            		$fullname = " " . $row['first'] . " " . $row['last'];
+			            			if (strpos($fullname, $word) == false)
+			            			{
+			            				$to_print = false;
+			            				break;
+			            			}
+				            	}
+
+				            	// print actor name if every user input word was found in their name
+				            	if($to_print)
+				            		print "Actor:<a href='show_actor.php?aid=" . $row['id'] . "'>" . $fullname . "</a><br>";
+				            }
+				        }
 
 			            // print matching movies
 			            print "<h3>Matching Movies</h3><br>";
 			            $movie_q = "SELECT title, id from Movie ORDER BY title;";
 			            $movie_rs = mysql_query($movie_q, $db_connection);
 
-			            while($row = mysql_fetch_array($movie_rs))
+			            if(!is_resource($movie_rs))
 			            {
-			            	$to_print = true;
-
-			            	foreach ($input_array as $word)
-			            	{
-			            		if (strpos(" " . $row['title'], $word) == false) // if word is not in title
-			            		{
-			            			$to_print = false;
-			            			break;
-			            		}
-			            	}
-
-			            	// print movie name if every user input word was found in the title
-			            	if($to_print)
-			            		// print "Movie:" . $row['title'] . "<br>";
-			            		print "Movie:<a href='show_movie.php?mid=" . $row['id'] . "'>" . $row['title'] . "</a><br>";
+			            	print "Invalid SQL query: Cannot get information about Movie";
 			            }
+			            else
+			            {
+				            while($row = mysql_fetch_array($movie_rs))
+				            {
+				            	$to_print = true;
+
+				            	foreach ($input_array as $word)
+				            	{
+				            		if (strpos(" " . $row['title'], $word) == false) // if word is not in title
+				            		{
+				            			$to_print = false;
+				            			break;
+				            		}
+				            	}
+
+				            	// print movie name if every user input word was found in the title
+				            	if($to_print)
+				            		// print "Movie:" . $row['title'] . "<br>";
+				            		print "Movie:<a href='show_movie.php?mid=" . $row['id'] . "'>" . $row['title'] . "</a><br>";
+				            }
+				        }
 
 						mysql_free_result($actor_rs);
 						mysql_free_result($movie_rs);
