@@ -4,27 +4,28 @@
 		<title>CS143 Project 1B</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-		<link rel="stylesheet" href="style.css">
+
 	</head>
 
 	<body>
-		<div class="page-header">
-			<h1>CS143 Project 1B: Movie Database <small>Garima Lunawat and Katie Aspinwall</small></h1>
-		</div>
+		<h1>CS143 Project 1B: Movie Database</h1>
+		<h3>Garima Lunawat and Katie Aspinwall</h3>
 
 		<div class="row">
-			<div class="col-md-3">
-				<ul class="nav nav-pills nav-stacked">
-					<li><a href="search.php"><b>SEARCH</b></a></li>
-				 	<li><a href="add_actorDirector.php"><b>ADD ACTOR/DIRECTOR</b></a></li>
-					<li><a href="add_movie.php"><b>ADD MOVIE</b></a></li>
-					<li><a href="add_movieActor.php"><b>ADD MOVIE/ACTOR RELATION</b></a></li>
-					<li><a href="add_movieDirector.php"><b>ADD MOVIE/DIRECTOR RELATION</b></a></li>
-					<li><a href="add_rating.php"><b>ADD RATING</b></a></li>
-				</ul>
+			<div class="col-md-4">
+				<p>Add Actor / Director</p>
+				<p>Add Movie Information</p>
+				<p>Add Movie / Actor Relation</p>
+				<p>Add Movie / Director Relation</p>
+				<br>
+				<p>Actor Information</p>
+				<p>Movie Information</p>
+				<br>
+				<p>Search</p>
+		
 			</div> 
 
-			<div class="col-md-9">
+			<div class="col-md-8">
 					<?php
 						include 'lookup.php';
 

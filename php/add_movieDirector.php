@@ -79,30 +79,35 @@
 					
 					<input type="submit" value="Submit" />
 				</form>
+			
+				<?php			
+					$mid = $_GET['mid'];
+					$did = $_GET['did'];
+
+				    $db_connection = mysql_connect("localhost", "cs143", "");
+
+				    if(!$db_connection) {
+		                $errmsg = mysql_error($db_connection);
+		                print "Connection failed: $errmsg <br />";
+		                exit(1);
+		            }
+
+		            mysql_select_db("CS143", $db_connection);
+
+					$query = "INSERT INTO MovieDirector VALUES ($mid, $did);";
+
+					if (!mysql_query($query, $db_connection) && $mid!="" && $did!="")
+					{
+						print "Invalid SQL query: Cannot add information into MovieDirector";
+					}
+					else
+					{
+						print "<br> <b>Success!</b>";
+					}
+
+					mysql_close($db_connection);
+				?>
 			</div>
 		</div>
-			<?php			
-				$mid = $_GET['mid'];
-				$did = $_GET['did'];
-
-			    $db_connection = mysql_connect("localhost", "cs143", "");
-
-			    if(!$db_connection) {
-	                $errmsg = mysql_error($db_connection);
-	                print "Connection failed: $errmsg <br />";
-	                exit(1);
-	            }
-
-	            mysql_select_db("CS143", $db_connection);
-
-				$query = "INSERT INTO MovieDirector VALUES ($mid, $did);";
-
-				if (!mysql_query($query, $db_connection) && $mid!="" && $did!="")
-				{
-					print "Invalid SQL query: Cannot add information into MovieDirector";
-				}
-
-				mysql_close($db_connection);
-			?>
 	</body>
 </html>

@@ -42,71 +42,76 @@
 												(Leave blank if still alive)<br>
 					<input type="submit" value="Submit" />
 				</form>
+		
+				
+				<?php
+				if ( !empty( $_GET['whois'])) 
+				{
+					$whois = $_GET['whois'];
+					$first_name = $_GET['first_name'];
+					$last_name = $_GET['last_name'];
+					$gender = $_GET['gender'];
+					$dob = $_GET['doby'] . $_GET['dobm'] . $_GET['dobd'];
+					$dod = $_GET['dody'] . $_GET['dodm'] . $_GET['dodd'];
+
+				    $db_connection = mysql_connect("localhost", "cs143", "");
+
+				    if(!$db_connection) {
+		                $errmsg = mysql_error($db_connection);
+		                print "Connection failed: $errmsg <br />";
+		                exit(1);
+		            }
+
+		            mysql_select_db("CS143", $db_connection);
+
+				    $id_query = 'SELECT id FROM MaxPersonID';
+					$id_rs = mysql_query($id_query, $db_connection);
+					if (!is_resource($id_rs))
+				    {
+				    	print "Invalid SQL query <br />";
+				    }
+				    else
+				    {
+						$row = mysql_fetch_row($id_rs);
+						$id = current($row) + 1;
+
+						if ($whois == "Actor")
+						{
+							$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, $dod);";
+									// $whois
+									// # VALUES ($id,"$last_name", "$first_name", "$gender", $dob, $dod);
+									// VALUES (69001, "Luna", "Gari", "Female", 20001231, 20981231)';
+						}
+						else
+						{
+							$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", $dob, $dod);";
+						}
+
+						if (!mysql_query($query, $db_connection))
+						{
+							print "Invalid SQL query: Values not inserted into " . $whois . " <br />";
+						}
+						else
+						{
+							$increment_query = "UPDATE MaxPersonID SET id=$id;"; // TACO write a query to increment max ID
+							if (!mysql_query($increment_query, $db_connection))
+							{
+								$del_query = "DELETE FROM " . $whois . " WHERE id=$id;";
+								print "Invalid SQL query: MaxPersonID not updated <br />";
+							}
+							else
+							{
+								print "<br> <b>Success!</b>";
+							}
+						}
+					}
+					
+					mysql_free_result($id_rs);
+					mysql_close($db_connection);
+		        }
+		        	
+				?>
 			</div>
 		</div>
-		
-		<?php
-		if ( !empty( $_GET['whois'])) 
-		{
-			$whois = $_GET['whois'];
-			$first_name = $_GET['first_name'];
-			$last_name = $_GET['last_name'];
-			$gender = $_GET['gender'];
-			$dob = $_GET['doby'] . $_GET['dobm'] . $_GET['dobd'];
-			$dod = $_GET['dody'] . $_GET['dodm'] . $_GET['dodd'];
-
-		    $db_connection = mysql_connect("localhost", "cs143", "");
-
-		    if(!$db_connection) {
-                $errmsg = mysql_error($db_connection);
-                print "Connection failed: $errmsg <br />";
-                exit(1);
-            }
-
-            mysql_select_db("CS143", $db_connection);
-
-		    $id_query = 'SELECT id FROM MaxPersonID';
-			$id_rs = mysql_query($id_query, $db_connection);
-			if (!is_resource($id_rs))
-		    {
-		    	print "Invalid SQL query <br />";
-		    }
-		    else
-		    {
-				$row = mysql_fetch_row($id_rs);
-				$id = current($row) + 1;
-
-				if ($whois == "Actor")
-				{
-					$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, $dod);";
-							// $whois
-							// # VALUES ($id,"$last_name", "$first_name", "$gender", $dob, $dod);
-							// VALUES (69001, "Luna", "Gari", "Female", 20001231, 20981231)';
-				}
-				else
-				{
-					$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", $dob, $dod);";
-				}
-
-				if (!mysql_query($query, $db_connection))
-				{
-					print "Invalid SQL query: Values not inserted into " . $whois . " <br />";
-				}
-				else
-				{
-					$increment_query = "UPDATE MaxPersonID SET id=$id;"; // TACO write a query to increment max ID
-					if (!mysql_query($increment_query, $db_connection))
-					{
-						$del_query = "DELETE FROM " . $whois . " WHERE id=$id;";
-						print "Invalid SQL query: MaxPersonID not updated <br />";
-					}
-				}
-			}
-			
-			mysql_free_result($id_rs);
-			mysql_close($db_connection);
-        }
-        	
-		?>
 	</body>
 </html>

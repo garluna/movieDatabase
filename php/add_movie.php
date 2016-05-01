@@ -56,86 +56,91 @@
 							<input type="checkbox" name="genre[]" value="Western"> Western<br>
 					<input type="submit" value="Submit" />
 				</form>
-			</div>
-		</div>
+		
 
-		<?php
-			if (!empty( $_GET['title'])) 
-			{
-				$title = $_GET['title'];
-				$year = $_GET['year'];
-				$company = $_GET['company'];
-				$rating = $_GET['rating'];
-
-			    $db_connection = mysql_connect("localhost", "cs143", "");
-
-			    if(!$db_connection) {
-	                $errmsg = mysql_error($db_connection);
-	                print "Connection failed: $errmsg <br />";
-	                exit(1);
-	            }
-
-	            mysql_select_db("CS143", $db_connection);
-
-			    $id_query = 'SELECT id FROM MaxMovieID';
-				$id_rs = mysql_query($id_query, $db_connection);
-				if (!is_resource($id_rs))
-		    	{
-		    		print "Invalid SQL query: Cannot select max ID from MaxMovieID <br />";
-		    	}
-		    	else
-		    	{
-					$row = mysql_fetch_row($id_rs);
-					$id = current($row) + 1;
-
-					$query = "INSERT INTO Movie VALUES ($id, \"$title\", \"$year\", \"$rating\", \"$company\");";
-					if (!mysql_query($query, $db_connection))
+				<?php
+					if (!empty( $_GET['title'])) 
 					{
-						print "Invalid SQL query: Cannot insert into Movie Database <br />";
-					}
-					else
-					{
-						// Insert genre(s) into MovieGenre table
-						$valid = true;
-						if(is_array($_GET['genre'])) {
-						    foreach($_GET['genre'] as $genre) {
-						        $add_genre_q = "INSERT INTO MovieGenre VALUES ($id, \"$genre\");";
-						        if (!mysql_query($add_genre_q, $db_connection))
-						        {
-						        	$valid = false;
-						        }
-						    }
-						}
+						$title = $_GET['title'];
+						$year = $_GET['year'];
+						$company = $_GET['company'];
+						$rating = $_GET['rating'];
 
-						if ($valid == false)
-						{
-							$del_query = "DELETE FROM MovieGenre mid=$id;";
-							mysql_query($del_query, $db_connection);
-							$del_query2 = "DELETE FROM Movie WHERE id=$id;";
-							mysql_query($del_query2, $db_connection);
-							print "Invalid SQL query: Cannot insert into MovieGenre <br />";
-						}
-						else
-						{
-							// $query2 = "INSERT INTO MovieGenre VALUES ($id, \"$genre\");";
-							// mysql_query($query2, $db_connection);
+					    $db_connection = mysql_connect("localhost", "cs143", "");
 
-							$increment_query = "UPDATE MaxMovieID SET id=$id;";
-							if (!mysql_query($increment_query, $db_connection))
+					    if(!$db_connection) {
+			                $errmsg = mysql_error($db_connection);
+			                print "Connection failed: $errmsg <br />";
+			                exit(1);
+			            }
+
+			            mysql_select_db("CS143", $db_connection);
+
+					    $id_query = 'SELECT id FROM MaxMovieID';
+						$id_rs = mysql_query($id_query, $db_connection);
+						if (!is_resource($id_rs))
+				    	{
+				    		print "Invalid SQL query: Cannot select max ID from MaxMovieID <br />";
+				    	}
+				    	else
+				    	{
+							$row = mysql_fetch_row($id_rs);
+							$id = current($row) + 1;
+
+							$query = "INSERT INTO Movie VALUES ($id, \"$title\", \"$year\", \"$rating\", \"$company\");";
+							if (!mysql_query($query, $db_connection))
 							{
-								$del_query = "DELETE FROM MovieGenre mid=$id;";
-								mysql_query($del_query, $db_connection);
-								$del_query2 = "DELETE FROM Movie WHERE id=$id;";
-								mysql_query($del_query2, $db_connection);
-								print "Invalid SQL query: Cannot update MaxMovieID";
+								print "Invalid SQL query: Cannot insert into Movie Database <br />";
+							}
+							else
+							{
+								// Insert genre(s) into MovieGenre table
+								$valid = true;
+								if(is_array($_GET['genre'])) {
+								    foreach($_GET['genre'] as $genre) {
+								        $add_genre_q = "INSERT INTO MovieGenre VALUES ($id, \"$genre\");";
+								        if (!mysql_query($add_genre_q, $db_connection))
+								        {
+								        	$valid = false;
+								        }
+								    }
+								}
+
+								if ($valid == false)
+								{
+									$del_query = "DELETE FROM MovieGenre mid=$id;";
+									mysql_query($del_query, $db_connection);
+									$del_query2 = "DELETE FROM Movie WHERE id=$id;";
+									mysql_query($del_query2, $db_connection);
+									print "Invalid SQL query: Cannot insert into MovieGenre <br />";
+								}
+								else
+								{
+									// $query2 = "INSERT INTO MovieGenre VALUES ($id, \"$genre\");";
+									// mysql_query($query2, $db_connection);
+
+									$increment_query = "UPDATE MaxMovieID SET id=$id;";
+									if (!mysql_query($increment_query, $db_connection))
+									{
+										$del_query = "DELETE FROM MovieGenre mid=$id;";
+										mysql_query($del_query, $db_connection);
+										$del_query2 = "DELETE FROM Movie WHERE id=$id;";
+										mysql_query($del_query2, $db_connection);
+										print "Invalid SQL query: Cannot update MaxMovieID";
+									}
+									else
+									{
+										print "<br> <b>Success!</b>";;
+									}
+								}
 							}
 						}
-					}
-				}
-				
-				mysql_free_result($id_rs);
-				mysql_close($db_connection);
-	        }
-		?>
+						
+						mysql_free_result($id_rs);
+						mysql_close($db_connection);
+			        }
+				?>
+			</div>
+		</div>
 	</body>
 </html>

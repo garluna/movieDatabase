@@ -64,36 +64,41 @@
 					<textarea rows="4" cols="50" name="comments"></textarea><br><br>
 					<input type="submit" value="Submit" />
 				</form>
+			
+				<?php
+
+					if ( !empty( $_GET['name'])) 
+					{
+						$mid = $_GET['mid'];
+						$name = $_GET['name'];
+						$rating = $_GET['rating']; // get integer value of rating
+						$comments = $_GET['comments'];
+
+					    $db_connection = mysql_connect("localhost", "cs143", "");
+
+					    if(!$db_connection) {
+			                $errmsg = mysql_error($db_connection);
+			                print "Connection failed: $errmsg <br />";
+			                exit(1);
+			            }
+
+			            mysql_select_db("CS143", $db_connection);
+
+						$query = "INSERT INTO Review VALUES (\"$name\", CURRENT_TIMESTAMP(), $mid, $rating, \"$comments\");";
+
+						if (!mysql_query($query, $db_connection))
+						{
+							print "Invalid SQL query: Cannot add Review <br />";
+						}
+						else
+						{
+							print "<br> <b>Success!</b>";
+						}
+						mysql_close($db_connection);
+			        }
+		        	
+				?>
 			</div>
 		</div>
-			<?php
-
-				if ( !empty( $_GET['name'])) 
-				{
-					$mid = $_GET['mid'];
-					$name = $_GET['name'];
-					$rating = $_GET['rating']; // get integer value of rating
-					$comments = $_GET['comments'];
-
-				    $db_connection = mysql_connect("localhost", "cs143", "");
-
-				    if(!$db_connection) {
-		                $errmsg = mysql_error($db_connection);
-		                print "Connection failed: $errmsg <br />";
-		                exit(1);
-		            }
-
-		            mysql_select_db("CS143", $db_connection);
-
-					$query = "INSERT INTO Review VALUES (\"$name\", CURRENT_TIMESTAMP(), $mid, $rating, \"$comments\");";
-
-					if (!mysql_query($query, $db_connection))
-					{
-						print "Invalid SQL query: Cannot add Review <br />";
-					}
-					mysql_close($db_connection);
-		        }
-	        	
-			?>
 	</body>
 </html>

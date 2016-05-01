@@ -80,36 +80,41 @@
 					Role: <input type="text" name="role"><br>
 					<input type="submit" value="Submit" />
 				</form>
+			
+				<?php
+
+					if ( !empty( $_GET['role'])) 
+					{
+						$role = $_GET['role'];
+						$mid = $_GET['mid'];
+						$aid = $_GET['aid'];
+
+					    $db_connection = mysql_connect("localhost", "cs143", "");
+
+					    if(!$db_connection) {
+			                $errmsg = mysql_error($db_connection);
+			                print "Connection failed: $errmsg <br />";
+			                exit(1);
+			            }
+
+			            mysql_select_db("CS143", $db_connection);
+
+						$query = "INSERT INTO MovieActor VALUES ($mid, $aid, \"$role\");";
+
+						if (!mysql_query($query, $db_connection))
+						{
+							print "Invalid SQL query: Cannot add information into MovieActor";
+						}
+						else
+						{
+							print "<br> <b>Success!</b>";
+						}
+
+						mysql_close($db_connection);
+			        }
+		        	
+				?>
 			</div>
 		</div>
-			<?php
-
-				if ( !empty( $_GET['role'])) 
-				{
-					$role = $_GET['role'];
-					$mid = $_GET['mid'];
-					$aid = $_GET['aid'];
-
-				    $db_connection = mysql_connect("localhost", "cs143", "");
-
-				    if(!$db_connection) {
-		                $errmsg = mysql_error($db_connection);
-		                print "Connection failed: $errmsg <br />";
-		                exit(1);
-		            }
-
-		            mysql_select_db("CS143", $db_connection);
-
-					$query = "INSERT INTO MovieActor VALUES ($mid, $aid, \"$role\");";
-
-					if (!mysql_query($query, $db_connection))
-					{
-						print "Invalid SQL query: Cannot add information into MovieActor";
-					}
-
-					mysql_close($db_connection);
-		        }
-	        	
-			?>
 	</body>
 </html>
