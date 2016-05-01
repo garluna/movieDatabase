@@ -71,7 +71,7 @@
 
 	            	// print actor name if every user input word was found in their name
 	            	if($to_print)
-	            		print "Actor:<a href='show_actor.php?aid=" . $row['id'] . "'>" . $fullname . "<br>";
+	            		print "Actor:<a href='show_actor.php?aid=" . $row['id'] . "'>" . $fullname . "</a><br>";
 	            }
 
 	            // print matching movies
