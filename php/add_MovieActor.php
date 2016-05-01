@@ -103,7 +103,10 @@
 
 					$query = "INSERT INTO MovieActor VALUES ($mid, $aid, \"$role\");";
 
-					mysql_query($query, $db_connection);
+					if (!mysql_query($query, $db_connection))
+					{
+						print "Invalid SQL query: Cannot add information into MovieActor";
+					}
 
 					mysql_close($db_connection);
 		        }
