@@ -61,8 +61,10 @@
 
 	            	foreach ($input_array as $word)
 	            	{
-	            		if (strpos($row['first'], $word) == false) // if word is not in first name
-	            			if (strpos($row['last'], $word) == false) // if word also not in last name
+	            		$fullname = " " . $row['first'] . " " . $row['last'];
+	            		//if /*(strpos($row['first'], $word) == false) && */(strpos($row['last'], $word) == false) // if word is not in first name
+	            			// if (strpos($row['last'], $word) == false) // if word also not in last name
+	            			if (strpos($fullname, $word) == false)
 	            			{
 	            				$to_print = false;
 	            				break;
@@ -85,7 +87,7 @@
 
 	            	foreach ($input_array as $word)
 	            	{
-	            		if (strpos($row['title'], $word) == false) // if word is not in title
+	            		if (strpos(" " . $row['title'], $word) == false) // if word is not in title
 	            		{
 	            			$to_print = false;
 	            			break;
