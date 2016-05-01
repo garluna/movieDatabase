@@ -13,17 +13,17 @@
 
 		<div class="row">
 			<div class="col-md-4">
-				<p>Add Actor / Director</p>
-				<p>Add Movie Information</p>
-				<p>Add Movie / Actor Relation</p>
-				<p>Add Movie / Director Relation</p>
+				<p><a href="add_actorDirector.php">Add Actor / Director</a></p>
+				<p><a href="add_movie.php">Add Movie Information</a></p>
+				<p><a href="add_movieActor.php">Add Movie / Actor Relation</a></p>
+				<p><a href="add_movieDirector.php">Add Movie / Director Relation</a></p>
+				<p><a href="add_rating.php">Add Rating</a></p>
 				<br>
-				<p>Actor Information</p>
-				<p>Movie Information</p>
+				<p><a href="show_actor.php">Actor Information</a></p>
+				<p><a href="show_movie.php">Movie Information</a></p>
 				<br>
-				<p>Search</p>
-		
-			</div> 
+				<p><a href="search.php">Search</a></p>
+			</div>  
 
 			<div class="col-md-8">
 				<form action="add_rating.php" method="GET">
