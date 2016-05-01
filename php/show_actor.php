@@ -40,14 +40,17 @@
 
 			            mysql_select_db("CS143", $db_connection);
 
-			            $id_query = "SELECT MIN(id) FROM Actor;";
-						$id_rs = mysql_query($id_query, $db_connection);
-						$row = mysql_fetch_assoc($id_rs);
-						$minID = current($row);
-						// print_r($row);
-						
-			            // actorLookup($minID);
-			            actorLookup(367);
+			            if (!empty($_GET['aid'])) // if aid passed by another page
+			            	$minID = $_GET['aid']; 
+			            else // if no specified aid
+			            {
+			            	$id_query = "SELECT MIN(id) FROM Actor;";
+							$id_rs = mysql_query($id_query, $db_connection);
+							$row = mysql_fetch_assoc($id_rs);
+							$minID = current($row);
+			            }
+
+			            actorLookup($minID);
 			            mysql_free_result($id_rs);
 			            mysql_close($db_connection);
 					?>
