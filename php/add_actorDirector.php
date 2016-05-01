@@ -77,14 +77,27 @@
 
 						if ($whois == "Actor")
 						{
-							$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, $dod);";
-									// $whois
+							if (empty($dod))
+							{
+								$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, NULL);";
+							}
+							else
+							{
+								$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, $dod);";
+							}	// $whois
 									// # VALUES ($id,"$last_name", "$first_name", "$gender", $dob, $dod);
 									// VALUES (69001, "Luna", "Gari", "Female", 20001231, 20981231)';
 						}
 						else
 						{
-							$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", $dob, $dod);";
+							if (empty($dod))
+							{
+								$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", $dob, NULL);";
+							}
+							else
+							{
+								$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", $dob, $dod);";
+							}
 						}
 
 						if (!mysql_query($query, $db_connection))

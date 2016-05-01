@@ -65,7 +65,7 @@
 				            	foreach ($input_array as $word)
 				            	{
 				            		$fullname = " " . $row['first'] . " " . $row['last'];
-			            			if (strpos($fullname, $word) == false)
+			            			if (stripos($fullname, $word) == false)
 			            			{
 			            				$to_print = false;
 			            				break;
@@ -95,7 +95,7 @@
 
 				            	foreach ($input_array as $word)
 				            	{
-				            		if (strpos(" " . $row['title'], $word) == false) // if word is not in title
+				            		if (stripos(" " . $row['title'], $word) == false) // if word is not in title
 				            		{
 				            			$to_print = false;
 				            			break;
