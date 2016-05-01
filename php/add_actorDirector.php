@@ -67,20 +67,43 @@
 
 		    $id_query = 'SELECT id FROM MaxPersonID';
 			$id_rs = mysql_query($id_query, $db_connection);
-			$row = mysql_fetch_row($id_rs);
-			$id = current($row) + 1;
-			mysql_free_result($id_rs);
+			if (!is_resource($id_rs))
+		    {
+		    	print "Invalid SQL query <br />";
+		    }
+		    else
+		    {
+				$row = mysql_fetch_row($id_rs);
+				$id = current($row) + 1;
 
-			$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, $dod);";
-						// $whois
-						// # VALUES ($id,"$last_name", "$first_name", "$gender", $dob, $dod);
-						// VALUES (69001, "Luna", "Gari", "Female", 20001231, 20981231)';
+				if ($whois == "Actor")
+				{
+					$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", \"$gender\", $dob, $dod);";
+							// $whois
+							// # VALUES ($id,"$last_name", "$first_name", "$gender", $dob, $dod);
+							// VALUES (69001, "Luna", "Gari", "Female", 20001231, 20981231)';
+				}
+				else
+				{
+					$query = "INSERT INTO " . $whois . " VALUES ($id, \"$last_name\", \"$first_name\", $dob, $dod);";
+				}
 
-			mysql_query($query, $db_connection);
-
-			$increment_query = "UPDATE MaxPersonID SET id=$id;"; // TACO write a query to increment max ID
-			mysql_query($increment_query, $db_connection);
+				if (!mysql_query($query, $db_connection))
+				{
+					print "Invalid SQL query: Values not inserted into " . $whois . " <br />";
+				}
+				else
+				{
+					$increment_query = "UPDATE MaxPersonID SET id=$id;"; // TACO write a query to increment max ID
+					if (!mysql_query($increment_query, $db_connection))
+					{
+						$del_query = "DELETE FROM " . $whois . " WHERE id=$id;";
+						print "Invalid SQL query: MaxPersonID not updated <br />";
+					}
+				}
+			}
 			
+			mysql_free_result($id_rs);
 			mysql_close($db_connection);
         }
         	
