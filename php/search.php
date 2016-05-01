@@ -52,7 +52,7 @@
 
 	            // print matching actors
 	            print "<h3>Matching Actors</h3><br>";
-	            $actor_q = "SELECT first, last FROM Actor ORDER BY last;";
+	            $actor_q = "SELECT first, last, id FROM Actor ORDER BY last;";
 	            $actor_rs = mysql_query($actor_q, $db_connection);
 	            
 	            while($row = mysql_fetch_array($actor_rs))
@@ -62,18 +62,16 @@
 	            	foreach ($input_array as $word)
 	            	{
 	            		$fullname = " " . $row['first'] . " " . $row['last'];
-	            		//if /*(strpos($row['first'], $word) == false) && */(strpos($row['last'], $word) == false) // if word is not in first name
-	            			// if (strpos($row['last'], $word) == false) // if word also not in last name
-	            			if (strpos($fullname, $word) == false)
-	            			{
-	            				$to_print = false;
-	            				break;
-	            			}
+            			if (strpos($fullname, $word) == false)
+            			{
+            				$to_print = false;
+            				break;
+            			}
 	            	}
 
 	            	// print actor name if every user input word was found in their name
 	            	if($to_print)
-	            		print "Actor: " . $row['first'] . " " . $row['last'] . "<br>";
+	            		print "Actor:<a href='show_actor.php?aid=" . $row['id'] . "'>" . $fullname . "<br>";
 	            }
 
 	            // print matching movies
