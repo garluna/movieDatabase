@@ -8,24 +8,23 @@
 	</head>
 
 	<body>
-		<h1>CS143 Project 1B: Movie Database</h1>
-		<h3>Garima Lunawat and Katie Aspinwall</h3>
+		<div class="page-header">
+			<h1>CS143 Project 1B: Movie Database <small>Garima Lunawat and Katie Aspinwall</small></h1>
+		</div>
 
 		<div class="row">
-			<div class="col-md-4">
-				<p><a href="add_actorDirector.php">Add Actor / Director</a></p>
-				<p><a href="add_movie.php">Add Movie Information</a></p>
-				<p><a href="add_movieActor.php">Add Movie / Actor Relation</a></p>
-				<p><a href="add_movieDirector.php">Add Movie / Director Relation</a></p>
-				<p><a href="add_rating.php">Add Rating</a></p>
-				<br>
-				<p><a href="show_actor.php">Actor Information</a></p>
-				<p><a href="show_movie.php">Movie Information</a></p>
-				<br>
-				<p><a href="search.php">Search</a></p>
-			</div>  
+			<div class="col-md-3">
+				<ul class="nav nav-pills nav-stacked">
+					<li><a href="search.php"><b>SEARCH</b></a></li>
+				 	<li><a href="add_actorDirector.php"><b>ADD ACTOR/DIRECTOR</b></a></li>
+					<li><a href="add_movie.php"><b>ADD MOVIE</b></a></li>
+					<li><a href="add_movieActor.php"><b>ADD MOVIE/ACTOR RELATION</b></a></li>
+					<li><a href="add_movieDirector.php"><b>ADD MOVIE/DIRECTOR RELATION</b></a></li>
+					<li><a href="add_rating.php"><b>ADD RATING</b></a></li>
+				</ul>
+			</div> 
 
-			<div class="col-md-8">
+			<div class="col-md-9">
 				<form action="add_rating.php" method="GET">
 					<?php
 						print "Movie: 	<select name=\"mid\">";
