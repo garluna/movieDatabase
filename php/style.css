@@ -1,0 +1,14 @@
+body {
+   	padding-left: 30px;
+   	padding-right: 30 px;
+   	background-color: #f9fafa;
+   	font-family:  "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.row {
+	height: 100%;
+}
+
+.col-md-3 {
+	background-color: #ECEFF1;
+}

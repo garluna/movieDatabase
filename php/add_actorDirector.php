@@ -4,7 +4,7 @@
 		<title>CS143 Project 1B</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
+		<link rel="stylesheet" href="style.css">
 	</head>
 
 	<body>
@@ -14,6 +14,7 @@
 
 		<div class="row">
 			<div class="col-md-3">
+				<!-- <p><b>NAVIGATION</p> -->
 				<ul class="nav nav-pills nav-stacked">
 					<li><a href="search.php"><b>SEARCH</b></a></li>
 				 	<li><a href="add_actorDirector.php"><b>ADD ACTOR/DIRECTOR</b></a></li>
